@@ -177,7 +177,7 @@ class File::FileImpl
         auto err = errno;
         if(rc == 0)
         {
-            const off_t end_pos = ftello(m_fp);
+            const off_t end_pos = ftell(m_fp);
             if(end_pos >= 0)
             {
                 return static_cast<position_type>(end_pos);

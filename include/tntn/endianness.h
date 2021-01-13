@@ -2,7 +2,13 @@
 
 #include <algorithm>
 
-#if defined(__BYTE_ORDER) && __BYTE_ORDER == __BIG_ENDIAN || defined(__BIG_ENDIAN__) || \
+/* All versions of Windows are little-endian
+ * see https://docs.microsoft.com/en-us/windows/win32/sysinfo/registry-value-types?redirectedfrom=MSDN
+ * see https://stackoverflow.com/questions/6449468/can-i-safely-assume-that-windows-installations-will-always-be-little-endian
+*/
+#if(defined(_WIN16) || defined(_WIN32) || defined(_WIN64)) && !defined(__WINDOWS__)
+#    define TNTN_LITTLE_ENDIAN
+#elif defined(__BYTE_ORDER) && __BYTE_ORDER == __BIG_ENDIAN || defined(__BIG_ENDIAN__) || \
     defined(__ARMEB__) || defined(__THUMBEB__) || defined(__AARCH64EB__) || defined(_MIBSEB) || \
     defined(__MIBSEB) || defined(__MIBSEB__)
 #    define TNTN_BIG_ENDIAN
@@ -11,11 +17,11 @@
     defined(__MIPSEL) || defined(__MIPSEL__)
 #    define TNTN_LITTLE_ENDIAN
 #else
-#    error unknown architecture
+#   error unknown architecture
 #endif
 
 #if !defined(TNTN_LITTLE_ENDIAN) && !defined(TNTN_BIG_ENDIAN)
-#    error neither little, nor big endian, platform not supported
+#   error neither little, nor big endian, platform not supported
 #endif
 
 namespace tntn {

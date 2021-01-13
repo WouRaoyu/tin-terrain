@@ -8,6 +8,11 @@ option(TNTN_DOWNLOAD_DEPS "download dependencies during cmake configure" ON)
 
 set(CMAKE_CXX_STANDARD 14)
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4018")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4244")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4251")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4267")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4996")
 
 # get the current working branch
 execute_process(
@@ -31,22 +36,14 @@ find_package(GDAL REQUIRED)
 if(NOT GDAL_FOUND)
     message(FATAL_ERROR "GDAL not found, cannot proceed")
 endif()
-if(NOT GDAL_CONFIG)
-    message(FATAL_ERROR "gdal-config command not found (not in PATH?), cannot proceed")
-endif()
 
-execute_process(
-  COMMAND ${GDAL_CONFIG} --version
-  OUTPUT_VARIABLE SYSTEM_GDAL_VERSION
-)
-
-if(SYSTEM_GDAL_VERSION VERSION_LESS "2.2")
-    message(FATAL_ERROR "GDAL version \"${SYSTEM_GDAL_VERSION}\" is too old, at least 2.2 is required")
+if(${GDAL_VERSION} VERSION_LESS "2.2")
+    message(FATAL_ERROR "GDAL version \"${GDAL_VERSION}\" is too old, at least 2.2 is required")
 endif()
 
 # Boost
 set(Boost_USE_STATIC_LIBS ON CACHE BOOL "" FORCE)
-set(Boost_USE_STATIC_LIBS ON)
+set(Boost_USE_STATIC_LIBS OFF)
 find_package(Boost REQUIRED COMPONENTS
     program_options
     filesystem

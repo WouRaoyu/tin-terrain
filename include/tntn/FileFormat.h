@@ -71,23 +71,23 @@ class FileFormat
     }
     static FileFormat from_string(const char* s) noexcept
     {
-        if(strcasecmp(s, "off") == 0)
+        if(strcmp(s, "off") == 0)
             return OFF;
-        else if(strcasecmp(s, "obj") == 0)
+        else if(strcmp(s, "obj") == 0)
             return OBJ;
-        else if(strcasecmp(s, "asc") == 0)
+        else if(strcmp(s, "asc") == 0)
             return ASC;
-        else if(strcasecmp(s, "xyz") == 0)
+        else if(strcmp(s, "xyz") == 0)
             return XYZ;
-        else if(strcasecmp(s, "terrain") == 0)
+        else if(strcmp(s, "terrain") == 0)
             return TERRAIN;
-        else if(strcasecmp(s, "json") == 0)
+        else if(strcmp(s, "json") == 0)
             return JSON;
-        else if(strcasecmp(s, "geojson") == 0)
+        else if(strcmp(s, "geojson") == 0)
             return GEOJSON;
-        else if(strcasecmp(s, "tiff") == 0)
+        else if(strcmp(s, "tiff") == 0)
             return TIFF;
-        else if(strcasecmp(s, "tif") == 0)
+        else if(strcmp(s, "tif") == 0)
             return TIF;
         else
             return NONE;
